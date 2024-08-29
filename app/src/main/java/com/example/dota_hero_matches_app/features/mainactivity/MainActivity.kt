@@ -1,4 +1,4 @@
-package com.example.dota_hero_matches_app
+package com.example.dota_hero_matches_app.features.mainactivity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.dota_hero_matches_app.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 

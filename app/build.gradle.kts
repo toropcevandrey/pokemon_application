@@ -37,7 +37,8 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
-        compose = true
+        compose = false
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -57,6 +58,10 @@ dependencies {
 
     // Feature module support for Fragments
     implementation(libs.androidx.navigation.dynamic.features.fragment)
+
+    //ViewModel
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
+    implementation (libs.androidx.lifecycle.livedata.ktx)
 
     implementation(libs.androidx.viewpager2)
     implementation(libs.androidx.core.ktx)
