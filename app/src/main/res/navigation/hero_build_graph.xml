@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/hero_build_graph"
+    app:startDestination="@id/hero_build_fragment">
+
+    <fragment
+        android:id="@+id/hero_build_fragment"
+        android:name="com.example.dota_hero_matches_app.HeroBuildFragment"
+        android:label="HeroBuildFragment">
+
+    </fragment>
+
+</navigation>
