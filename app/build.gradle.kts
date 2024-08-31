@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias (libs.plugins.hilt.application)
+    id("kotlin-kapt")
 }
 
 android {
@@ -51,6 +53,15 @@ android {
 }
 
 dependencies {
+
+    //Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+
+    //hilt
+    implementation (libs.hilt.android)
+    kapt (libs.hilt.android.compiler)
+    implementation (libs.hilt.navigation.compose)
 
     // Views/Fragments integration
     implementation(libs.androidx.navigation.fragment)

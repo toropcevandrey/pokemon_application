@@ -1,18 +1,20 @@
-package com.example.dota_hero_matches_app.features.heroes
+package com.example.dota_hero_matches_app.presentation.features.matches
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.example.dota_hero_matches_app.R
+import dagger.hilt.android.AndroidEntryPoint
 
-class HeroesFragment : Fragment() {
+@AndroidEntryPoint
+class MatchesFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_heroes, container, false)
+        return inflater.inflate(R.layout.fragment_matches, container, false)
     }
 }

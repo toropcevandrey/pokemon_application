@@ -1,4 +1,4 @@
-package com.example.dota_hero_matches_app.features.herobuild
+package com.example.dota_hero_matches_app.presentation.features.herobuild
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.dota_hero_matches_app.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HeroBuildFragment : Fragment() {
 
     override fun onCreateView(

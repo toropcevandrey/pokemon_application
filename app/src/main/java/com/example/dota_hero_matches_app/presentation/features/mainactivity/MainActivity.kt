@@ -1,6 +1,7 @@
-package com.example.dota_hero_matches_app.features.mainactivity
+package com.example.dota_hero_matches_app.presentation.features.mainactivity
 
 import android.os.Bundle
+import android.view.View.OnClickListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -9,8 +10,9 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.dota_hero_matches_app.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,4 +50,5 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
+
 }
