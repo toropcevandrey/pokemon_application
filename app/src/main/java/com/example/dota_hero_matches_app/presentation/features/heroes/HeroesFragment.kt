@@ -26,8 +26,6 @@ class HeroesFragment : Fragment() {
 
         tvH.text = viewModel.sendText()
 
-
-
         return view
     }
 }

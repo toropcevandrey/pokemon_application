@@ -11,6 +11,16 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.dota_hero_matches_app.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import java.util.concurrent.locks.Lock
+import java.util.concurrent.locks.ReentrantLock
+import kotlin.concurrent.thread
+import kotlin.concurrent.withLock
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -50,5 +60,4 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
-
 }

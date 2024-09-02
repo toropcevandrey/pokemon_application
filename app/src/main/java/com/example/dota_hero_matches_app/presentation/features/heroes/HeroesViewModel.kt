@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dota_hero_matches_app.data.HeroesApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -12,16 +14,18 @@ import javax.inject.Inject
 class HeroesViewModel @Inject constructor(private val heroesApiService: HeroesApiService) :
     ViewModel() {
 
-
-
     init {
-        viewModelScope.launch {
-            val a: String = heroesApiService.getHeroes().get(1).name
-            Log.d("ZAPROS", a)
+        val job = viewModelScope.launch(Dispatchers.Main) {
+            repeat(10) { i ->
+                Log.d("CORUTINA", "START")
+                delay(1000)
+                Log.d("CORUTINA", "DELAY END")
+                val a: String = heroesApiService.getHeroes().get(i).name
+                Log.d("ZAPROS", a)
+            }
         }
-
+        Log.d("CROUTINA", "CANCELED")
     }
 
-    fun sendText() = "xyi"
-
+    fun sendText() = "test"
 }
