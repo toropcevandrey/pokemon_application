@@ -1,30 +1,38 @@
 package com.example.dota_hero_matches_app.presentation.features.heroes
 
-import android.util.Log
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dota_hero_matches_app.data.HeroesApiService
+import com.example.dota_hero_matches_app.data.repository.heroes.HeroesRepository
+import com.example.dota_hero_matches_app.model.HeroesModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HeroesViewModel @Inject constructor(private val heroesApiService: HeroesApiService) :
+class HeroesViewModel @Inject constructor(private val heroesRepository: HeroesRepository) :
     ViewModel() {
 
-    init {
-        val job = viewModelScope.launch(Dispatchers.Main) {
-            repeat(10) { i ->
-                Log.d("CORUTINA", "START")
-                delay(1000)
-                Log.d("CORUTINA", "DELAY END")
-                val a: String = heroesApiService.getHeroes().get(i).name
-                Log.d("ZAPROS", a)
+    private val _heroesLiveData: MutableLiveData<HeroesModel> =
+        MutableLiveData()
+    var heroesLiveData: LiveData<HeroesModel> = _heroesLiveData
+
+
+
+    fun getHeroesFromRepository() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                _heroesLiveData.postValue(heroesRepository.getHeroesFromApi())
+
+
+            } catch (e: Exception) {
+
             }
+
         }
-        Log.d("CROUTINA", "CANCELED")
     }
 
     fun sendText() = "test"
