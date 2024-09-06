@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.dota_hero_matches_app"
+    namespace = "com.example.poke_app"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.dota_hero_matches_app"
+        applicationId = "com.example.poke_app"
         minSdk = 28
         targetSdk = 34
         versionCode = 1
@@ -53,6 +53,10 @@ android {
 }
 
 dependencies {
+
+    //OkHTTP
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
 
     //Retrofit
     implementation(libs.retrofit)

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_matches"
-        android:name="com.example.dota_hero_matches_app.presentation.features.matches.MatchesFragment"
+        android:name="com.example.poke_app.presentation.features.matches.MatchesFragment"
         android:label="fragment_matches"
         tools:layout="@layout/fragment_matches" >
         <action
@@ -17,9 +17,9 @@
 
     <fragment
         android:id="@+id/navigation_heroes"
-        android:name="com.example.dota_hero_matches_app.presentation.features.heroes.HeroesFragment"
+        android:name="com.example.poke_app.presentation.features.heroes.FeedFragment"
         android:label="Matches"
-        tools:layout="@layout/fragment_heroes" >
+        tools:layout="@layout/fragment_feed" >
         <action
             android:id="@+id/navigate_fragment_heroe_to_hero_build_fragment"
             app:destination="@+id/hero_build_fragment"/>
@@ -27,20 +27,20 @@
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.example.dota_hero_matches_app.presentation.features.profile.ProfileFragment"
+        android:name="com.example.poke_app.presentation.features.profile.ProfileFragment"
         android:label="Matches"
         tools:layout="@layout/fragment_profile" >
     </fragment>
 
     <fragment
         android:id="@+id/hero_build_fragment"
-        android:name="com.example.dota_hero_matches_app.presentation.features.herobuild.HeroBuildFragment"
+        android:name="com.example.poke_app.presentation.features.herobuild.HeroBuildFragment"
         android:label="HeroBuildFragment"
         tools:layout="@layout/fragment_hero_build"/>
 
     <fragment
         android:id="@+id/match_stat_fragment"
-        android:name="com.example.dota_hero_matches_app.presentation.features.matchstat.MatchStatFragment"
+        android:name="com.example.poke_app.presentation.features.matchstat.MatchStatFragment"
         android:label="fragment_match_stat"
         tools:layout="@layout/fragment_match_stat">
     </fragment>
