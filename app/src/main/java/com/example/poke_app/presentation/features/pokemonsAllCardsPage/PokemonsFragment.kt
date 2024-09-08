@@ -33,25 +33,22 @@ class PokemonsFragment : Fragment() {
     }
 
     private fun initViews() {
-         val spanCount = 2 // Количество столбцов
-         val spacing = resources.getDimensionPixelSize(R.dimen.grid_spacing) // Отступы в пикселях
-         val includeEdge = true // Включить отступы для крайних элементов
+        val spanCount = 2 // Количество столбцов
+        val spacing = resources.getDimensionPixelSize(R.dimen.grid_spacing) // Отступы в пикселях
+        val includeEdge = true // Включить отступы для крайних элементов
 
         recyclerView = binding.rvHeroes
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = GridLayoutManager(activity, 2)
+        recyclerView.layoutManager = GridLayoutManager(activity, spanCount)
         recyclerView.addItemDecoration(GridSpacingItemDecoration(spanCount, spacing, includeEdge))
     }
 
     private fun setObservers() {
-
         viewModel.pokemonsLiveData.observe(viewLifecycleOwner) { state ->
-            val isError = state is PokemonsState.Error
-            val isSuccess = state is PokemonsState.Success
-            val isLoading = state is PokemonsState.Loading
-
-            if (isSuccess) {
-                adapter.submitList((state as PokemonsState.Success).pokemons)
+            when (state) {
+                is PokemonsState.Error -> TODO("Добавить в разметку стейт ошибки")
+                is PokemonsState.Loading -> TODO("Добавить в разметку стейт загрузки")
+                is PokemonsState.Success -> adapter.submitList(state.pokemons)
             }
         }
     }

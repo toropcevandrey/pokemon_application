@@ -16,14 +16,13 @@ class PokemonsViewModel @Inject constructor(private val pokemonsRepository: Poke
     ViewModel() {
 
     private val _pokemonsLiveData: MutableLiveData<PokemonsState> =
-        MutableLiveData(PokemonsState.Loading)
+        MutableLiveData()   //TODO Добавить (PokemonsState.Loading)
 
     var pokemonsLiveData: LiveData<PokemonsState> = _pokemonsLiveData
 
-    private var pokemons: List<PokemonsViewData> = mutableListOf()
-
     fun getAllPokeCardsFromRepository() {
-        _pokemonsLiveData.value = PokemonsState.Loading
+        var pokemons: List<PokemonsViewData>
+//        _pokemonsLiveData.value = PokemonsState.Loading //TODO включить после добавления разметки
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 pokemons = pokemonsRepository.getAllPokemonsFromApi().pokemonApiModels.map { it ->
@@ -32,7 +31,6 @@ class PokemonsViewModel @Inject constructor(private val pokemonsRepository: Poke
                         name = it.name,
                         image = it.pokemonImages.small
                     )
-
                 }
                 withContext(Dispatchers.Main) {
                     _pokemonsLiveData.value = PokemonsState.Success(pokemons)
@@ -40,9 +38,6 @@ class PokemonsViewModel @Inject constructor(private val pokemonsRepository: Poke
             } catch (e: Exception) {
                 _pokemonsLiveData.value = PokemonsState.Error
             }
-
         }
     }
-
-
 }
