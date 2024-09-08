@@ -1,6 +1,6 @@
 package com.example.poke_app.model
 
-data class Images(
+data class PokemonImages(
     val large: String,
-    val small: String
+    val small: String,
 )

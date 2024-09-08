@@ -1,6 +1,6 @@
 package com.example.poke_app.di.modules
 
-import com.example.poke_app.data.PokeApiService
+import com.example.poke_app.data.PokemonsApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,8 +32,8 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideHeroesApiService(retrofit: Retrofit): PokeApiService =
-        retrofit.create(PokeApiService::class.java)
+    fun provideHeroesApiService(retrofit: Retrofit): PokemonsApiService =
+        retrofit.create(PokemonsApiService::class.java)
 }
 
 const val BASE_URL = "https://api.pokemontcg.io/v2/"

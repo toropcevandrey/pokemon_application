@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_matches,
-                R.id.navigation_heroes,
+                R.id.navigation_pokemons,
                 R.id.navigation_profile
             )
         )

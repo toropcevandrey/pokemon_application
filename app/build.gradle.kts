@@ -54,6 +54,10 @@ android {
 
 dependencies {
 
+    //Glide
+    implementation (libs.glide)
+    annotationProcessor (libs.compiler)
+
     //OkHTTP
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)

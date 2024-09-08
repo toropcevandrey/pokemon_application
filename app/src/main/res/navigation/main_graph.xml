@@ -16,10 +16,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_heroes"
-        android:name="com.example.poke_app.presentation.features.heroes.FeedFragment"
-        android:label="Matches"
-        tools:layout="@layout/fragment_feed" >
+        android:id="@+id/navigation_pokemons"
+        android:name="com.example.poke_app.presentation.features.pokemonsAllCardsPage.PokemonsFragment"
+        android:label="Pokemons"
+        tools:layout="@layout/fragment_pokemons" >
         <action
             android:id="@+id/navigate_fragment_heroe_to_hero_build_fragment"
             app:destination="@+id/hero_build_fragment"/>
