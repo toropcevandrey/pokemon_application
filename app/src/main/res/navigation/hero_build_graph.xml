@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/hero_build_fragment"
-        android:name="com.example.dota_hero_matches_app.features.herobuild.HeroBuildFragment"
+        android:name="com.example.poke_app.presentation.features.herobuild.HeroBuildFragment"
         android:label="HeroBuildFragment">
 
     </fragment>

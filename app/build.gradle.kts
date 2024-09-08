@@ -1,14 +1,16 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias (libs.plugins.hilt.application)
+    id("kotlin-kapt")
 }
 
 android {
-    namespace = "com.example.dota_hero_matches_app"
+    namespace = "com.example.poke_app"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.dota_hero_matches_app"
+        applicationId = "com.example.poke_app"
         minSdk = 28
         targetSdk = 34
         versionCode = 1
@@ -51,6 +53,23 @@ android {
 }
 
 dependencies {
+
+    //Glide
+    implementation (libs.glide)
+    annotationProcessor (libs.compiler)
+
+    //OkHTTP
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+
+    //Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+
+    //hilt
+    implementation (libs.hilt.android)
+    kapt (libs.hilt.android.compiler)
+    implementation (libs.hilt.navigation.compose)
 
     // Views/Fragments integration
     implementation(libs.androidx.navigation.fragment)

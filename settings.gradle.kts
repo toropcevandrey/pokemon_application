@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "dota_hero_matches_app"
+rootProject.name = "poke_app"
 include(":app")
  
