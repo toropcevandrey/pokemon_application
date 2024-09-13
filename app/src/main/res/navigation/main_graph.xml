@@ -16,12 +16,12 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_pokemons"
-        android:name="com.example.poke_app.presentation.features.pokemonsAllCardsPage.PokemonsFragment"
-        android:label="Pokemons"
-        tools:layout="@layout/fragment_pokemons" >
+        android:id="@+id/navigation_pokemons_feed"
+        android:name="com.example.poke_app.presentation.features.pokemonsFeed.PokemonsFeedFragment"
+        android:label="PokemonsFeed"
+        tools:layout="@layout/fragment_pokemons_feed" >
         <action
-            android:id="@+id/navigate_fragment_heroe_to_hero_build_fragment"
+            android:id="@+id/navigate_fragment_pokemons_feed_to_hero_build_fragment"
             app:destination="@+id/hero_build_fragment"/>
     </fragment>
 

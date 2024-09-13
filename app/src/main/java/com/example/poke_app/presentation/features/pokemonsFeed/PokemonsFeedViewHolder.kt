@@ -1,10 +1,10 @@
-package com.example.poke_app.presentation.features.pokemonsAllCardsPage
+package com.example.poke_app.presentation.features.pokemonsFeed
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.poke_app.databinding.CardViewHeroesBinding
 
-class PokemonsViewHolder(val binding: CardViewHeroesBinding) :
+class PokemonsFeedViewHolder(val binding: CardViewHeroesBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(text: String, image: String) {

@@ -19,8 +19,7 @@
             android:name=".presentation.features.mainactivity.MainActivity"
             android:allowBackup="true"
             android:exported="true"
-            android:label="@string/poke_app"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+            android:label="@string/poke_app">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

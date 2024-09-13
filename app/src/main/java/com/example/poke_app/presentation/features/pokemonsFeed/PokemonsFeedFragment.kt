@@ -1,33 +1,35 @@
-package com.example.poke_app.presentation.features.pokemonsAllCardsPage
+package com.example.poke_app.presentation.features.pokemonsFeed
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.poke_app.R
-import com.example.poke_app.databinding.FragmentPokemonsBinding
+import com.example.poke_app.databinding.FragmentPokemonsFeedBinding
 import com.example.poke_app.presentation.view.GridSpacingItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PokemonsFragment : Fragment() {
+class PokemonsFeedFragment : Fragment() {
 
-    private val viewModel: PokemonsViewModel by viewModels()
+    private val viewModel: PokemonsFeedViewModel by viewModels()
     private lateinit var recyclerView: RecyclerView
-    private val adapter: PokemonsListAdapter by lazy { PokemonsListAdapter() }
-    private lateinit var binding: FragmentPokemonsBinding
+    private val adapter: PokemonsFeedListAdapter by lazy { PokemonsFeedListAdapter() }
+    private lateinit var binding: FragmentPokemonsFeedBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentPokemonsBinding.inflate(layoutInflater)
+        binding = FragmentPokemonsFeedBinding.inflate(layoutInflater)
         initViews()
         setObservers()
+        onRefresh()
         viewModel.getAllPokeCardsFromRepository()
         return binding.root
     }
@@ -37,18 +39,31 @@ class PokemonsFragment : Fragment() {
         val spacing = resources.getDimensionPixelSize(R.dimen.grid_spacing) // Отступы в пикселях
         val includeEdge = true // Включить отступы для крайних элементов
 
-        recyclerView = binding.rvHeroes
+        recyclerView = binding.rvPokemonsFeed
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(activity, spanCount)
         recyclerView.addItemDecoration(GridSpacingItemDecoration(spanCount, spacing, includeEdge))
     }
 
+    private fun onRefresh(){
+        binding.svPokemonsFeed.setOnRefreshListener {
+            viewModel.getAllPokeCardsFromRepository()
+            binding.svPokemonsFeed.isRefreshing = false
+        }
+    }
+
     private fun setObservers() {
         viewModel.pokemonsLiveData.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                is PokemonsState.Error -> TODO("Добавить в разметку стейт ошибки")
-                is PokemonsState.Loading -> TODO("Добавить в разметку стейт загрузки")
-                is PokemonsState.Success -> adapter.submitList(state.pokemons)
+            val isError = state is PokemonsFeedState.Error
+            val isSuccess = state is PokemonsFeedState.Success
+            val isLoading = state is PokemonsFeedState.Loading
+
+            binding.pbPokemonsFeed.isVisible = isLoading
+            binding.tvPokemonsFeedError.isVisible = isError
+            binding.rvPokemonsFeed.isVisible = isSuccess
+
+            if (state is PokemonsFeedState.Success) {
+                adapter.submitList(state.pokemons)
             }
         }
     }
