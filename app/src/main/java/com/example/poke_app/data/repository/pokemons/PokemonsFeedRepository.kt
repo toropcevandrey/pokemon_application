@@ -4,7 +4,7 @@ import com.example.poke_app.data.PokemonsApiService
 import com.example.poke_app.model.PokemonsResponse
 import javax.inject.Inject
 
-class PokemonsRepository @Inject constructor(
+class PokemonsFeedRepository @Inject constructor(
     private val pokemonsApiService: PokemonsApiService
 ) {
     suspend fun getAllPokemonsFromApi(): PokemonsResponse = pokemonsApiService.getAllPokemons()

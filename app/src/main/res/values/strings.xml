@@ -2,4 +2,5 @@
     <string name="poke_app">poke_app</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pokemons_feed_download_error">Похоже что-то пошло не так,\n пожалуйста, попробуйте \n обновить страницу</string>
 </resources>

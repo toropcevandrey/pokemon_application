@@ -54,6 +54,9 @@ android {
 
 dependencies {
 
+    //SwipeRefreshLayout
+    implementation(libs.androidx.swiperefreshlayout)
+
     //Glide
     implementation (libs.glide)
     annotationProcessor (libs.compiler)
