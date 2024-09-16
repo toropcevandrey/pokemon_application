@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.poke_app"
+    namespace = "com.example.pokemon_application"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.poke_app"
+        applicationId = "com.example.pokemon_application"
         minSdk = 28
         targetSdk = 34
         versionCode = 1
