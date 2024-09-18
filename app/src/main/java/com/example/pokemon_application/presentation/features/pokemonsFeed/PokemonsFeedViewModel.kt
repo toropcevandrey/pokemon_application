@@ -19,11 +19,11 @@ class PokemonsFeedViewModel @Inject constructor(private val pokemonsFeedReposito
     private val _pokemonsFeedLiveData: MutableLiveData<PokemonsFeedState> =
         MutableLiveData(PokemonsFeedState.Loading)
 
-    var pokemonsFeedLiveData: LiveData<PokemonsFeedState> = _pokemonsFeedLiveData
+    val pokemonsFeedLiveData: LiveData<PokemonsFeedState> = _pokemonsFeedLiveData
 
     private val openPokemonDetails = SingleLiveEvent<String>()
 
-    fun observeOpenPokemonDetails(): LiveData<String> = openPokemonDetails
+    val observeOpenPokemonDetails: LiveData<String> = openPokemonDetails
 
     fun onPokemonClicked(id: String){
         openPokemonDetails.value = id

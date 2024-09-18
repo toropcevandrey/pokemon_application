@@ -68,7 +68,7 @@ class PokemonsFeedFragment : Fragment(), PokemonsFeedListAdapter.OnPokemonClickL
             }
         }
 
-        viewModel.observeOpenPokemonDetails().observe(viewLifecycleOwner) { id ->
+        viewModel.observeOpenPokemonDetails.observe(viewLifecycleOwner) { id ->
             findNavController().navigate(
                 PokemonsFeedFragmentDirections.toDetailsFragment(id)
             )
