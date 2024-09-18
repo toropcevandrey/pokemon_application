@@ -2,15 +2,16 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias (libs.plugins.hilt.application)
+    alias (libs.plugins.navigation.safeargs.kotlin)
     id("kotlin-kapt")
 }
 
 android {
-    namespace = "com.example.poke_app"
+    namespace = "com.example.pokemon_application"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.poke_app"
+        applicationId = "com.example.pokemon_application"
         minSdk = 28
         targetSdk = 34
         versionCode = 1

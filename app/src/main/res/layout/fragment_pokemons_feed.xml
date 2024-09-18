@@ -14,7 +14,7 @@
             android:id="@+id/rv_pokemons_feed"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/card_view_heroes" />
+            tools:listitem="@layout/card_view_pokemon" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
