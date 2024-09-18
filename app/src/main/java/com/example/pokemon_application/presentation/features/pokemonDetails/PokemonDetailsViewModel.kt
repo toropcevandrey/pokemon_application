@@ -23,7 +23,7 @@ class PokemonDetailsViewModel @Inject constructor(
     private val navArgs = PokemonDetailsFragmentArgs.fromSavedStateHandle(savedStateHandle)
     private val _pokemonsLiveData: MutableLiveData<String> =
         MutableLiveData()
-    var pokemonsLiveData: LiveData<String> = _pokemonsLiveData
+    val pokemonsLiveData: LiveData<String> = _pokemonsLiveData
 
     init {
         getImageByIdFromRepository(navArgs.pokemonId)
