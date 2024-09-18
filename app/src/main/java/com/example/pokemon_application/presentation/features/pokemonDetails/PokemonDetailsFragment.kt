@@ -13,11 +13,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PokemonDetailsFragment : Fragment() {
 
-    private val viewModel: PokemonDetailsViewModel by viewModels()
     private lateinit var binding: FragmentPokemonDetailsBinding
-    private val pokemonId by lazy {
-        arguments?.getString("POKEMON_ID")
-    }
+    private val viewModel: PokemonDetailsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,14 +22,11 @@ class PokemonDetailsFragment : Fragment() {
     ): View {
         binding = FragmentPokemonDetailsBinding.inflate(layoutInflater)
         setObserver()
-
-        pokemonId?.let { viewModel.getImageByIdFromRepository(it.toString()) }
-
         return binding.root
     }
 
-    private fun setObserver(){
-        viewModel.pokemonsLiveData.observe(viewLifecycleOwner){ state ->
+    private fun setObserver() {
+        viewModel.pokemonsLiveData.observe(viewLifecycleOwner) { state ->
             Glide.with(requireContext())
                 .load(state)
                 .into(binding.ivPokemonDetails)

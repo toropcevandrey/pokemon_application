@@ -23,9 +23,9 @@ class PokemonsFeedViewModel @Inject constructor(private val pokemonsFeedReposito
 
     private val openPokemonDetails = SingleLiveEvent<String>()
 
-    fun observeOpenPokemonDetails(): SingleLiveEvent<String> = openPokemonDetails
+    fun observeOpenPokemonDetails(): LiveData<String> = openPokemonDetails
 
-    fun sendPokemonId(id: String){
+    fun onPokemonClicked(id: String){
         openPokemonDetails.value = id
     }
 

@@ -3,10 +3,11 @@ package com.example.pokemon_application.presentation.features.pokemonDetails
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pokemon_application.data.repository.pokemonDetails.PokemonDetailsRepository
-import com.example.pokemon_application.model.PokemonApiModel
+import dagger.assisted.AssistedFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,15 +15,21 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class PokemonDetailsViewModel @Inject constructor(private val pokemonDetailsRepository: PokemonDetailsRepository) :
-    ViewModel() {
+class PokemonDetailsViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
+    private val pokemonDetailsRepository: PokemonDetailsRepository
+) : ViewModel() {
+
+    private val navArgs = PokemonDetailsFragmentArgs.fromSavedStateHandle(savedStateHandle)
     private val _pokemonsLiveData: MutableLiveData<String> =
         MutableLiveData()
-
     var pokemonsLiveData: LiveData<String> = _pokemonsLiveData
 
-    fun getImageByIdFromRepository(id: String) {
+    init {
+        getImageByIdFromRepository(navArgs.pokemonId)
+    }
 
+    private fun getImageByIdFromRepository(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val image =
@@ -36,7 +43,5 @@ class PokemonDetailsViewModel @Inject constructor(private val pokemonDetailsRepo
                 }
             }
         }
-
     }
-
 }

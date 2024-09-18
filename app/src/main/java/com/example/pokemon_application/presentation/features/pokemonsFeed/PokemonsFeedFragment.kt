@@ -67,14 +67,15 @@ class PokemonsFeedFragment : Fragment(), PokemonsFeedListAdapter.OnPokemonClickL
                 adapter.submitList(state.pokemons)
             }
         }
+
         viewModel.observeOpenPokemonDetails().observe(viewLifecycleOwner) { id ->
-            findNavController().navigate(R.id.toDetailsFragment,
-                Bundle().apply {putString("POKEMON_ID", id)}
+            findNavController().navigate(
+                PokemonsFeedFragmentDirections.toDetailsFragment(id)
             )
         }
     }
 
     override fun onPokemonClick(id: String) {
-        viewModel.sendPokemonId(id)
+        viewModel.onPokemonClicked(id)
     }
 }
