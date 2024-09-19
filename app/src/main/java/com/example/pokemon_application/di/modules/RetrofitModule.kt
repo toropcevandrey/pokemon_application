@@ -1,6 +1,6 @@
 package com.example.pokemon_application.di.modules
 
-import com.example.pokemon_application.data.PokemonsApiService
+import com.example.pokemon_application.features.pokemons_feed.data.PokemonsApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
