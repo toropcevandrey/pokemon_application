@@ -31,7 +31,6 @@ class PokemonsFeedFragment : Fragment(), PokemonsFeedListAdapter.OnPokemonClickL
         initViews()
         setObservers()
         onRefresh()
-        viewModel.getAllPokeCardsFromRepository()
         return binding.root
     }
 
@@ -41,6 +40,7 @@ class PokemonsFeedFragment : Fragment(), PokemonsFeedListAdapter.OnPokemonClickL
         val includeEdge = true // Включить отступы для крайних элементов
         val recyclerView: RecyclerView = binding.rvPokemonsFeed
 
+        recyclerView.itemAnimator = null
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(activity, spanCount)
         recyclerView.addItemDecoration(GridSpacingItemDecoration(spanCount, spacing, includeEdge))
@@ -48,7 +48,7 @@ class PokemonsFeedFragment : Fragment(), PokemonsFeedListAdapter.OnPokemonClickL
 
     private fun onRefresh() {
         binding.svPokemonsFeed.setOnRefreshListener {
-            viewModel.getAllPokeCardsFromRepository()
+            viewModel.loadPokemonsFeedFromAPI()
             binding.svPokemonsFeed.isRefreshing = false
         }
     }
@@ -64,7 +64,7 @@ class PokemonsFeedFragment : Fragment(), PokemonsFeedListAdapter.OnPokemonClickL
             binding.rvPokemonsFeed.isVisible = isSuccess
 
             if (state is PokemonsFeedState.Success) {
-                adapter.submitList(state.pokemons)
+                adapter.submitList(state.pokemons.toList())
             }
         }
 

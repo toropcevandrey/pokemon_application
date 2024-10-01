@@ -6,7 +6,7 @@ import javax.inject.Inject
 class PokemonsFeedRepository @Inject constructor(
     private val pokemonsApiService: PokemonsApiService
 ) {
-    suspend fun getAllPokemonsFromApi(): PokemonsResponse = pokemonsApiService.getAllPokemonsFromAPI()
+    suspend fun getAllPokemonsFromAPI(): PokemonsResponse = pokemonsApiService.getAllPokemonsFromAPI()
 
     suspend fun getPokemonsByName(name: String): PokemonsResponse =
         pokemonsApiService.getPokemonByNameFromAPI("name:$name")
