@@ -6,5 +6,5 @@ import javax.inject.Inject
 class PokemonDetailsRepository @Inject constructor(
     private val pokemonsApiService: PokemonsApiService
 ) {
-    suspend fun getPokemonDetailsByIdFromApi(id: String) = pokemonsApiService.getPokemonCardByID(id)
+    suspend fun getPokemonDetailsByIdFromApi(id: String) = pokemonsApiService.getPokemonCardByIDFromAPI(id)
 }

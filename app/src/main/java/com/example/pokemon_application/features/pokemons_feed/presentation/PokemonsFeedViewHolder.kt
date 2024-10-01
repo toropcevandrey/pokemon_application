@@ -1,5 +1,6 @@
 package com.example.pokemon_application.features.pokemons_feed.presentation
 
+import android.util.Log
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -32,6 +33,8 @@ class PokemonsFeedViewHolder(
         binding.btnPokemonFavoriteButton.setImageDrawable(icon)
 
         binding.btnPokemonFavoriteButton.setOnClickListener {
+            val a = isFavorite
+            Log.d("cat", a.toString())
             onClickListener.onFavoriteClick(id)
         }
     }

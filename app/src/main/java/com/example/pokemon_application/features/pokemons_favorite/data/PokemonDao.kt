@@ -9,14 +9,14 @@ import androidx.room.Query
 interface PokemonDao {
 
     @Query("SELECT * FROM pokemons")
-    suspend fun getAllFavoritePokemons(): List<PokemonData>
+    suspend fun getAllPokemonsFromFavoriteDB(): List<PokemonData>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addToFavorite(pokemonData: PokemonData)
+    suspend fun addPokemonToFavoriteDB(pokemonData: PokemonData)
 
     @Query("DELETE FROM pokemons WHERE id = :id")
-    suspend fun removeFromFavorite(id:String)
+    suspend fun removeFromFavoriteDB(id:String)
 
     @Query("SELECT count() FROM pokemons WHERE id=:id")
-    suspend fun ifPokemonFavorite(id:String): Boolean
+    suspend fun isPokemonInFavoriteDB(id:String): Boolean
 }

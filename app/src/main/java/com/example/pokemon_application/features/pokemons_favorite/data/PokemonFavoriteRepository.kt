@@ -7,19 +7,19 @@ class PokemonFavoriteRepository @Inject constructor(
     private val pokemonDao: PokemonDao,
     pokemonsApiService: PokemonsApiService
 ) {
-    suspend fun getAllPokemons(): List<PokemonData> {
-        return pokemonDao.getAllFavoritePokemons()
+    suspend fun getAllPokemonsFromFavoriteDB(): List<PokemonData> {
+        return pokemonDao.getAllPokemonsFromFavoriteDB()
     }
 
-    suspend fun deletePokemonFromFavorite(id: String) {
-        pokemonDao.removeFromFavorite(id)
+    suspend fun deletePokemonFromFavoriteDB(id: String) {
+        pokemonDao.removeFromFavoriteDB(id)
     }
 
-    suspend fun addPokemonToFavorite(pokemonData: PokemonData) {
-        pokemonDao.addToFavorite(pokemonData)
+    suspend fun addPokemonToFavoriteDB(pokemonData: PokemonData) {
+        pokemonDao.addPokemonToFavoriteDB(pokemonData)
     }
 
-    suspend fun ifPokemonFavorite(id: String): Boolean =
-        pokemonDao.ifPokemonFavorite(id)
+    suspend fun isPokemonInFavoriteDB(id: String): Boolean =
+        pokemonDao.isPokemonInFavoriteDB(id)
 
 }

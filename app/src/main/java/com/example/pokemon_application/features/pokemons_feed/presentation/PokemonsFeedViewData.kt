@@ -4,5 +4,5 @@ data class PokemonsFeedViewData(
     val id: String,
     val name: String,
     val image: String,
-    val isFavorite: Boolean
+    var isFavorite: Boolean
 )

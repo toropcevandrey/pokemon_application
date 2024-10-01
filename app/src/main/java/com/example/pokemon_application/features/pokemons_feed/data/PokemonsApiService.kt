@@ -8,17 +8,17 @@ import retrofit2.http.Query
 
 interface PokemonsApiService {
     @GET("cards")
-    suspend fun getAllPokemons(
+    suspend fun getAllPokemonsFromAPI(
         @Query("pageSize") pageSize: Int = 20,
     ): PokemonsResponse
 
     @GET("cards/{id}")
-    suspend fun getPokemonCardByID(
+    suspend fun getPokemonCardByIDFromAPI(
         @Path("id") id: String,
     ): PokemonsDetailsResponse
 
     @GET("cards/?")
-    suspend fun getPokemonByName(
+    suspend fun getPokemonByNameFromAPI(
         @Query("q", encoded = true) name: String,
     ): PokemonsResponse
 }

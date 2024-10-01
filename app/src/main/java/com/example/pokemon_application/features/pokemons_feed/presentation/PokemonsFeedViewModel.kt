@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.pokemon_application.features.pokemons_feed.data.PokemonsFeedRepository
 import com.example.pokemon_application.features.pokemons_feed.domain.PokemonsFeedInteractor
 import com.example.pokemon_application.utils.base.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -43,7 +42,6 @@ class PokemonsFeedViewModel @Inject constructor(private val pokemonsFeedInteract
                 val pokemonDataForView: MutableList<PokemonsFeedViewData> = mutableListOf()
                 val pokemonsFeedFromApi = pokemonsFeedInteractor.getPokemons()
                 val pokemonsFavorite = pokemonsFeedInteractor.getFavorites()
-
                 pokemonsFeedFromApi.pokemonApiModels.forEach { feedItem ->
 
                     val found = pokemonsFavorite.any { it.id == feedItem.id }
@@ -72,11 +70,52 @@ class PokemonsFeedViewModel @Inject constructor(private val pokemonsFeedInteract
 
     fun onFavoriteClicked(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
+            val newList = pokemonsFeedList.map {
+                if (it.id == id) {
+                    it.copy(isFavorite = !it.isFavorite)
+                } else {
+                    it
+                }
+            }
+
+            pokemonsFeedList.clear()
+            pokemonsFeedList.addAll(newList)
+
             val pokemon = pokemonsFeedList.find { it.id == id }
             if (pokemon != null) {
-                pokemonsFeedInteractor.toggleFavorite(pokemon.id, pokemon.name, pokemon.image)
+                pokemonsFeedInteractor.switchPokemonFavoriteInDB(pokemon.id, pokemon.name, pokemon.image)
+
+                pokemon?.let {
+                    pokemon.isFavorite = !pokemon.isFavorite
+                    pokemonsFeedInteractor.switchPokemonFavoriteInDB(
+                        pokemon.id,
+                        pokemon.name,
+                        pokemon.image
+                    )
+                }
+                val pokemonDataForView: MutableList<PokemonsFeedViewData> = mutableListOf()
+
+                val pokemonsFavorite = pokemonsFeedInteractor.getFavorites()
+
+                pokemonsFeedList.forEach { feedItem ->
+
+                    val found = pokemonsFavorite.any { it.id == feedItem.id }
+
+                    pokemonDataForView.add(
+                        PokemonsFeedViewData(
+                            id = feedItem.id,
+                            name = feedItem.name,
+                            image = feedItem.image,
+                            isFavorite = found
+                        )
+                    )
+                }
+                pokemonsFeedList.clear()
+                pokemonsFeedList.addAll(pokemonDataForView)
+            withContext(Dispatchers.Main) {
+                _pokemonsFeedLiveData.value = PokemonsFeedState.Success(pokemonsFeedList)
             }
-            updatePokemonsList()
+            }
         }
     }
 }
