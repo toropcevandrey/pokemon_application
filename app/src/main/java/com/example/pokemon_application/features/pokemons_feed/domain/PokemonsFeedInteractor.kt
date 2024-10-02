@@ -18,13 +18,9 @@ class PokemonsFeedInteractor @Inject constructor(
 
 
     suspend fun generateListForViewModel(
-        pokemonsResponse: MutableList<PokemonApiModel>,
-        pokemonData: MutableList<PokemonData>
     ): List<PokemonsFeedViewData> {
-        pokemonsResponse.clear()
-        pokemonData.clear()
-        pokemonsResponse.addAll(getPokemonsFeedFromAPI().pokemonApiModels)
-        pokemonData.addAll(getPokemonsFavoritesFromDB())
+        val pokemonsResponse = getPokemonsFeedFromAPI().pokemonApiModels
+        val pokemonData = getPokemonsFavoritesFromDB()
         val list: MutableList<PokemonsFeedViewData> = mutableListOf()
         val favoriteList = pokemonData.map { it.id }
         pokemonsResponse.forEach { e ->

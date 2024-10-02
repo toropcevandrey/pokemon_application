@@ -43,12 +43,7 @@ class PokemonsFeedViewModel @Inject constructor(private val pokemonsFeedInteract
                 pokemonsFeedForView.clear()
                 pokemonsFeedFromAPI.addAll(pokemonsFeedInteractor.getPokemonsFeedFromAPI().pokemonApiModels)
                 pokemonsFavoriteInDB.addAll(pokemonsFeedInteractor.getPokemonsFavoritesFromDB())
-                pokemonsFeedForView.addAll(
-                    pokemonsFeedInteractor.generateListForViewModel(
-                        pokemonsFeedFromAPI,
-                        pokemonsFavoriteInDB
-                    )
-                )
+                pokemonsFeedForView.addAll(pokemonsFeedInteractor.generateListForViewModel())
                 withContext(Dispatchers.Main) {
                     _pokemonsFeedLiveData.value = PokemonsFeedState.Success(pokemonsFeedForView)
                 }
