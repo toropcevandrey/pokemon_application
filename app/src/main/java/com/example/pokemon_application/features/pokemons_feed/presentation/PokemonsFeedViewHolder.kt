@@ -26,8 +26,11 @@ class PokemonsFeedViewHolder(
         }
 
         binding.btnPokemonFavoriteButton.setImageDrawable(
-            if(isFavorite) ContextCompat.getDrawable(binding.root.context, R.drawable.ic_favorite)
-            else ContextCompat.getDrawable(binding.root.context, R.drawable.ic_unfavorite)
+            if (isFavorite) {
+                ContextCompat.getDrawable(binding.root.context, R.drawable.ic_favorite)
+            } else {
+                ContextCompat.getDrawable(binding.root.context, R.drawable.ic_unfavorite)
+            }
         )
 
         binding.btnPokemonFavoriteButton.setOnClickListener {

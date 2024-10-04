@@ -17,21 +17,16 @@ class PokemonsFeedInteractor @Inject constructor(
 
     suspend fun generateListForViewModel(
     ): List<PokemonsFeedViewData> {
-        val pokemonsResponse = pokemonsFeedRepository.getAllPokemonsFromAPI().pokemonApiModels
         val pokemonData = pokemonFavoriteRepository.getAllPokemonsFromFavoriteDB()
-        val list: MutableList<PokemonsFeedViewData> = mutableListOf()
-        pokemonsResponse.forEach { e ->
-            val isFavorite = pokemonData.any{it.id == e.id}
-            list.add(
-                PokemonsFeedViewData(
-                    id = e.id,
-                    name = e.name,
-                    image = e.pokemonImages.small,
-                    isFavorite = isFavorite
-                )
+        return pokemonsFeedRepository.getAllPokemonsFromAPI().pokemonApiModels.map { element ->
+            val isFavorite = pokemonData.any { it.id == element.id }
+            PokemonsFeedViewData(
+                id = element.id,
+                name = element.name,
+                image = element.pokemonImages.small,
+                isFavorite = isFavorite
             )
         }
-        return list
     }
 
     suspend fun switchPokemonFavoriteInDB(id: String, name: String, image: String) {
