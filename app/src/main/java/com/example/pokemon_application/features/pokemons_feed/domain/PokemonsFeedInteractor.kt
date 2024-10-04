@@ -3,7 +3,6 @@ package com.example.pokemon_application.features.pokemons_feed.domain
 import com.example.pokemon_application.features.pokemons_favorite.data.PokemonData
 import com.example.pokemon_application.features.pokemons_favorite.data.PokemonFavoriteRepository
 import com.example.pokemon_application.features.pokemons_feed.data.PokemonsFeedRepository
-import com.example.pokemon_application.features.pokemons_feed.data.model.PokemonApiModel
 import com.example.pokemon_application.features.pokemons_feed.presentation.PokemonsFeedViewData
 import javax.inject.Inject
 
@@ -16,15 +15,13 @@ class PokemonsFeedInteractor @Inject constructor(
     suspend fun getPokemonsFavoritesFromDB() =
         pokemonFavoriteRepository.getAllPokemonsFromFavoriteDB()
 
-
     suspend fun generateListForViewModel(
     ): List<PokemonsFeedViewData> {
-        val pokemonsResponse = getPokemonsFeedFromAPI().pokemonApiModels
-        val pokemonData = getPokemonsFavoritesFromDB()
+        val pokemonsResponse = pokemonsFeedRepository.getAllPokemonsFromAPI().pokemonApiModels
+        val pokemonData = pokemonFavoriteRepository.getAllPokemonsFromFavoriteDB()
         val list: MutableList<PokemonsFeedViewData> = mutableListOf()
-        val favoriteList = pokemonData.map { it.id }
         pokemonsResponse.forEach { e ->
-            val isFavorite = favoriteList.contains(e.id)
+            val isFavorite = pokemonData.any{it.id == e.id}
             list.add(
                 PokemonsFeedViewData(
                     id = e.id,
