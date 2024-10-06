@@ -6,17 +6,24 @@
 
     <fragment
         android:id="@+id/pokemonsFeedFragment"
-        android:name="com.example.pokemon_application.presentation.features.pokemonsFeed.PokemonsFeedFragment">
+        android:name="com.example.pokemon_application.features.pokemons_feed.presentation.PokemonsFeedFragment">
         <action
             android:id="@+id/toDetailsFragment"
             app:destination="@id/pokemonDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/pokemonDetailsFragment"
-        android:name="com.example.pokemon_application.presentation.features.pokemonDetails.PokemonDetailsFragment">
+        android:name="com.example.pokemon_application.features.pokemon_details.presentation.PokemonDetailsFragment">
         <argument
             android:name="pokemonId"
             app:argType="string"
             app:nullable="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/pokemonsFavoriteFragment"
+        android:name="com.example.pokemon_application.features.pokemons_favorite.presentation.PokemonsFavoriteFragment">
+        <action
+            android:id="@+id/toDetailsFragment"
+            app:destination="@id/pokemonDetailsFragment"/>
     </fragment>
 </navigation>

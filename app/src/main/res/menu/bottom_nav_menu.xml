@@ -2,8 +2,13 @@
 
     <item
         android:id="@+id/pokemonsFeedFragment"
-        android:icon="@drawable/ic_profile"
         android:enabled="true"
+        android:icon="@drawable/ic_pokeball"
         android:title="Feed" />
+    <item
+        android:id="@+id/pokemonsFavoriteFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_favorite_feed"
+        android:title="Favorite" />
 
 </menu>
