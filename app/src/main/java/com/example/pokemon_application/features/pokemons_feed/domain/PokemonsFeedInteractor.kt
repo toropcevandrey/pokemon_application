@@ -3,30 +3,29 @@ package com.example.pokemon_application.features.pokemons_feed.domain
 import com.example.pokemon_application.features.pokemons_favorite.data.PokemonData
 import com.example.pokemon_application.features.pokemons_favorite.data.PokemonFavoriteRepository
 import com.example.pokemon_application.features.pokemons_feed.data.PokemonsFeedRepository
-import com.example.pokemon_application.features.pokemons_feed.presentation.PokemonsFeedViewData
+import com.example.pokemon_application.features.pokemons_feed.presentation.PokemonsScreenViewData
 import javax.inject.Inject
 
 class PokemonsFeedInteractor @Inject constructor(
     private val pokemonsFeedRepository: PokemonsFeedRepository,
     private val pokemonFavoriteRepository: PokemonFavoriteRepository
 ) {
-    suspend fun getPokemonsFeedFromAPI() = pokemonsFeedRepository.getAllPokemonsFromAPI()
-
-    suspend fun getPokemonsFavoritesFromDB() =
-        pokemonFavoriteRepository.getAllPokemonsFromFavoriteDB()
-
     suspend fun generateListForViewModel(
-    ): List<PokemonsFeedViewData> {
+    ): List<PokemonsScreenViewData> {
         val pokemonData = pokemonFavoriteRepository.getAllPokemonsFromFavoriteDB()
         return pokemonsFeedRepository.getAllPokemonsFromAPI().pokemonApiModels.map { element ->
             val isFavorite = pokemonData.any { it.id == element.id }
-            PokemonsFeedViewData(
+            PokemonsScreenViewData(
                 id = element.id,
                 name = element.name,
                 image = element.pokemonImages.small,
                 isFavorite = isFavorite
             )
         }
+    }
+
+    suspend fun isPokemonInFavoriteDB(id: String): Boolean {
+        return pokemonFavoriteRepository.isPokemonInFavoriteDB(id)
     }
 
     suspend fun switchPokemonFavoriteInDB(id: String, name: String, image: String) {

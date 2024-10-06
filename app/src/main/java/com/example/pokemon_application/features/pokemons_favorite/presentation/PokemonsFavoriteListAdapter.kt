@@ -4,14 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.example.pokemon_application.databinding.CardViewPokemonBinding
+import com.example.pokemon_application.features.pokemons_feed.presentation.PokemonsScreenViewData
 
 class PokemonsFavoriteListAdapter(
     private val onClickListener: OnPokemonClickListener
 ) :
-    ListAdapter<PokemonsFavoriteViewData, PokemonsFavoriteViewHolder>(PokemonsFavoriteComparator()) {
+    ListAdapter<PokemonsScreenViewData, PokemonsFavoriteViewHolder>(PokemonsFavoriteComparator()) {
 
     interface OnPokemonClickListener {
         fun onPokemonClick(id: String)
+        fun onFavoriteClick(id: String)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonsFavoriteViewHolder {
@@ -22,6 +24,6 @@ class PokemonsFavoriteListAdapter(
 
     override fun onBindViewHolder(holder: PokemonsFavoriteViewHolder, position: Int) {
         val current = getItem(position)
-        holder.bind(current.id, current.name, current.image)
+        holder.bind(current.id, current.name, current.image, current.isFavorite)
     }
 }

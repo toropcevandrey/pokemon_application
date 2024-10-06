@@ -1,7 +1,6 @@
 package com.example.pokemon_application.features.pokemons_feed.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,8 +23,7 @@ class PokemonsFeedFragment : Fragment(), PokemonsFeedListAdapter.OnPokemonClickL
     private lateinit var binding: FragmentPokemonsFeedBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentPokemonsFeedBinding.inflate(layoutInflater)
         initViews()
@@ -55,15 +53,15 @@ class PokemonsFeedFragment : Fragment(), PokemonsFeedListAdapter.OnPokemonClickL
 
     private fun setObservers() {
         viewModel.pokemonsFeedLiveData.observe(viewLifecycleOwner) { state ->
-            val isError = state is PokemonsFeedState.Error
-            val isSuccess = state is PokemonsFeedState.Success
-            val isLoading = state is PokemonsFeedState.Loading
+            val isError = state is PokemonsScreensViewState.Error
+            val isSuccess = state is PokemonsScreensViewState.Success
+            val isLoading = state is PokemonsScreensViewState.Loading
 
             binding.pbPokemonsFeed.isVisible = isLoading
             binding.tvPokemonsFeedError.isVisible = isError
             binding.rvPokemonsFeed.isVisible = isSuccess
 
-            if (state is PokemonsFeedState.Success) {
+            if (state is PokemonsScreensViewState.Success) {
                 adapter.submitList(state.pokemons.toList())
             }
         }

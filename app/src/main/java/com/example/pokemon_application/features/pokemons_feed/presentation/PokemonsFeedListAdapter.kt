@@ -7,8 +7,7 @@ import com.example.pokemon_application.databinding.CardViewPokemonBinding
 
 class PokemonsFeedListAdapter(
     private val onClickListener: OnPokemonClickListener
-) :
-    ListAdapter<PokemonsFeedViewData, PokemonsFeedViewHolder>(PokemonsFeedComparator()) {
+) : ListAdapter<PokemonsScreenViewData, PokemonsFeedViewHolder>(PokemonsFeedComparator()) {
 
     interface OnPokemonClickListener {
         fun onPokemonClick(id: String)

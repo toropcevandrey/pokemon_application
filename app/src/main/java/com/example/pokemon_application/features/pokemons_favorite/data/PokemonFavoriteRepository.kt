@@ -1,11 +1,9 @@
 package com.example.pokemon_application.features.pokemons_favorite.data
 
-import com.example.pokemon_application.features.pokemons_feed.data.PokemonsApiService
 import javax.inject.Inject
 
 class PokemonFavoriteRepository @Inject constructor(
-    private val pokemonDao: PokemonDao,
-    pokemonsApiService: PokemonsApiService
+    private val pokemonDao: PokemonDao
 ) {
     suspend fun getAllPokemonsFromFavoriteDB(): List<PokemonData> {
         return pokemonDao.getAllPokemonsFromFavoriteDB()
@@ -19,7 +17,7 @@ class PokemonFavoriteRepository @Inject constructor(
         pokemonDao.addPokemonToFavoriteDB(pokemonData)
     }
 
-    suspend fun isPokemonInFavoriteDB(id: String): Boolean =
-        pokemonDao.isPokemonInFavoriteDB(id)
-
+    suspend fun isPokemonInFavoriteDB(id: String): Boolean {
+        return pokemonDao.isPokemonInFavoriteDB(id)
+    }
 }
