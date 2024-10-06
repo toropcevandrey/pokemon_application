@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.pokemon_application.utils.view.GridSpacingItemDecoration
 import com.example.pokemon_application.R
 import com.example.pokemon_application.databinding.FragmentPokemonsFeedBinding
@@ -19,34 +18,33 @@ import dagger.hilt.android.AndroidEntryPoint
 class PokemonsFeedFragment : Fragment(), PokemonsFeedListAdapter.OnPokemonClickListener {
 
     private val viewModel: PokemonsFeedViewModel by viewModels()
-    private val adapter: PokemonsFeedListAdapter by lazy { PokemonsFeedListAdapter(this) }
+    private val listAdapter: PokemonsFeedListAdapter by lazy { PokemonsFeedListAdapter(this) }
     private lateinit var binding: FragmentPokemonsFeedBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentPokemonsFeedBinding.inflate(layoutInflater)
-        initViews()
+        setupRecyclerView()
         setObservers()
         onRefresh()
         return binding.root
     }
 
-    private fun initViews() {
-        val spanCount = 2 // Количество столбцов
-        val spacing = resources.getDimensionPixelSize(R.dimen.grid_spacing) // Отступы в пикселях
-        val includeEdge = true // Включить отступы для крайних элементов
-        val recyclerView: RecyclerView = binding.rvPokemonsFeed
-
-        recyclerView.itemAnimator = null
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = GridLayoutManager(activity, spanCount)
-        recyclerView.addItemDecoration(GridSpacingItemDecoration(spanCount, spacing, includeEdge))
+    private fun setupRecyclerView() {
+        val spanCount = 2
+        val spacing = resources.getDimensionPixelSize(R.dimen.grid_spacing)
+        val includeEdge = true
+        binding.rvPokemonsFeed.apply {
+            adapter = listAdapter
+            layoutManager = GridLayoutManager(activity, spanCount)
+            addItemDecoration(GridSpacingItemDecoration(spanCount, spacing, includeEdge))
+        }
     }
 
     private fun onRefresh() {
         binding.svPokemonsFeed.setOnRefreshListener {
-            viewModel.loadPokemonsFeedFromAPI()
+            viewModel.loadPokemonsFeedFromInteractor()
             binding.svPokemonsFeed.isRefreshing = false
         }
     }
@@ -61,8 +59,8 @@ class PokemonsFeedFragment : Fragment(), PokemonsFeedListAdapter.OnPokemonClickL
             binding.tvPokemonsFeedError.isVisible = isError
             binding.rvPokemonsFeed.isVisible = isSuccess
 
-            if (state is PokemonsScreensViewState.Success) {
-                adapter.submitList(state.pokemons.toList())
+            if (isSuccess) {
+                listAdapter.submitList((state as PokemonsScreensViewState.Success).pokemons.toList())
             }
         }
 

@@ -24,4 +24,20 @@ class PokemonsFeedListAdapter(
         val current = getItem(position)
         holder.bind(current.id, current.name, current.image, current.isFavorite)
     }
+
+    override fun onBindViewHolder(
+        holder: PokemonsFeedViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        val current = getItem(position)
+
+        if (payloads.isEmpty()) {
+            holder.bind(current.id, current.name, current.image, current.isFavorite)
+        } else {
+            if (payloads[0] == true) {
+                holder.bind(current.id, current.name, current.image, current.isFavorite)
+            }
+        }
+    }
 }

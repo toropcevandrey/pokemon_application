@@ -28,10 +28,10 @@ class PokemonsFeedViewModel @Inject constructor(private val pokemonsFeedInteract
     private val pokemonsFeedForView: MutableList<PokemonsScreenViewData> = mutableListOf()
 
     init {
-        loadPokemonsFeedFromAPI()
+        loadPokemonsFeedFromInteractor()
     }
 
-    fun loadPokemonsFeedFromAPI() {
+    fun loadPokemonsFeedFromInteractor() {
         viewModelScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.Main) {
                 _pokemonsFeedLiveData.value = PokemonsScreensViewState.Loading

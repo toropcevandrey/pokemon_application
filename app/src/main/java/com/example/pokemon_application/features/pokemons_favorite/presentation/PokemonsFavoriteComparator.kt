@@ -15,4 +15,11 @@ class PokemonsFavoriteComparator : DiffUtil.ItemCallback<PokemonsScreenViewData>
     ): Boolean {
         return oldItem == newItem
     }
+
+    override fun getChangePayload(
+        oldItem: PokemonsScreenViewData,
+        newItem: PokemonsScreenViewData
+    ): Any? {
+        return if (oldItem.isFavorite != newItem.isFavorite) true else null
+    }
 }

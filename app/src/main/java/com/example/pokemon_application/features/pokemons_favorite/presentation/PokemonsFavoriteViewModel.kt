@@ -29,10 +29,10 @@ class PokemonsFavoriteViewModel @Inject constructor(private val pokemonsFavorite
     private val pokemonsFavoriteForView: MutableList<PokemonsScreenViewData> = mutableListOf()
 
     init {
-        loadPokemonsFavoriteFromDB()
+        loadPokemonsFavoriteFromInteractor()
     }
 
-    fun loadPokemonsFavoriteFromDB() {
+    fun loadPokemonsFavoriteFromInteractor() {
         viewModelScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.Main) {
                 _pokemonsFavoriteLiveData.value = PokemonsScreensViewState.Loading
