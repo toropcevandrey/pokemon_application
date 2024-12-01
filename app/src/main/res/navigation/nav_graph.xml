@@ -2,28 +2,9 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/pokemonsFeedFragment">
+    app:startDestination="@id/feed_graph">
 
-    <fragment
-        android:id="@+id/pokemonsFeedFragment"
-        android:name="com.example.pokemon_application.features.pokemons_feed.presentation.PokemonsFeedFragment">
-        <action
-            android:id="@+id/toDetailsFragment"
-            app:destination="@id/pokemonDetailsFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/pokemonDetailsFragment"
-        android:name="com.example.pokemon_application.features.pokemon_details.presentation.PokemonDetailsFragment">
-        <argument
-            android:name="pokemonId"
-            app:argType="string"
-            app:nullable="false" />
-    </fragment>
-    <fragment
-        android:id="@+id/pokemonsFavoriteFragment"
-        android:name="com.example.pokemon_application.features.pokemons_favorite.presentation.PokemonsFavoriteFragment">
-        <action
-            android:id="@+id/toDetailsFragment"
-            app:destination="@id/pokemonDetailsFragment"/>
-    </fragment>
+    <include app:graph="@navigation/feed_graph" />
+    <include app:graph="@navigation/favorite_graph" />
+
 </navigation>

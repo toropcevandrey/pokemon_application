@@ -11,28 +11,21 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    private lateinit var navView: BottomNavigationView
+    private lateinit var  navHostFragment : NavHostFragment
+    private lateinit var  navController : NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
-
-        val navHostFragment = supportFragmentManager
+        navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
-
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
+        navView = findViewById(R.id.nav_view)
         navView.setupWithNavController(navController)
-
-        bottomNavItemChangeListener(navView, navController)
-    }
-
-    private fun bottomNavItemChangeListener(
-        navView: BottomNavigationView,
-        navController: NavController
-    ) {
-        navView.setOnItemSelectedListener { item ->
-            if (item.itemId != navView.selectedItemId) {
-                navController.popBackStack(item.itemId, inclusive = true, saveState = false)
+        navView.setOnItemSelectedListener{ item ->
+            if(item.itemId != navController.currentDestination?.id){
+                navController.popBackStack(item.itemId, inclusive = false, saveState = true)
                 navController.navigate(item.itemId)
             }
             true
