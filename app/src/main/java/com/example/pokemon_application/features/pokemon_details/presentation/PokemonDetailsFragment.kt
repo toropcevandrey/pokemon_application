@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.pokemon_application.databinding.FragmentPokemonDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,9 +27,13 @@ class PokemonDetailsFragment : Fragment() {
     }
 
     private fun setObserver() {
-        viewModel.pokemonsLiveData.observe(viewLifecycleOwner) { state ->
+        viewModel.pokemonsLiveData.observe(viewLifecycleOwner, ObserverD())
+    }
+
+    inner class ObserverD : Observer<String> {
+        override fun onChanged(value: String) {
             Glide.with(requireContext())
-                .load(state)
+                .load(value)
                 .into(binding.ivPokemonDetails)
         }
     }

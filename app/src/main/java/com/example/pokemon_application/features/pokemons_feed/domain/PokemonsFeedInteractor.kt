@@ -11,9 +11,10 @@ class PokemonsFeedInteractor @Inject constructor(
     private val pokemonFavoriteRepository: PokemonFavoriteRepository
 ) {
     suspend fun generateListForViewModel(
+        page: Int
     ): List<PokemonsScreenViewData> {
         val pokemonData = pokemonFavoriteRepository.getAllPokemonsFromFavoriteDB()
-        return pokemonsFeedRepository.getAllPokemonsFromAPI().pokemonApiModels.map { element ->
+        return pokemonsFeedRepository.getAllPokemonsFromAPI(page).pokemonApiModels.map { element ->
             val isFavorite = pokemonData.any { it.id == element.id }
             PokemonsScreenViewData(
                 id = element.id,

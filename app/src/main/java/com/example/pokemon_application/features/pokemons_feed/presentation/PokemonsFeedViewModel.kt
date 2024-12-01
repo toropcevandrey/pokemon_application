@@ -16,38 +16,93 @@ import javax.inject.Inject
 class PokemonsFeedViewModel @Inject constructor(private val pokemonsFeedInteractor: PokemonsFeedInteractor) :
     ViewModel() {
 
-    private val _pokemonsFeedLiveData: MutableLiveData<PokemonsScreensViewState> =
+    private val _pokemonsFeedStateLiveData: MutableLiveData<PokemonsScreensViewState> =
         MutableLiveData(PokemonsScreensViewState.Loading)
 
-    val pokemonsFeedLiveData: LiveData<PokemonsScreensViewState> = _pokemonsFeedLiveData
+    val pokemonsFeedStateLiveData: LiveData<PokemonsScreensViewState> = _pokemonsFeedStateLiveData
 
     private val openPokemonDetails = SingleLiveEvent<String>()
 
     val observeOpenPokemonDetails: LiveData<String> = openPokemonDetails
 
-    private val pokemonsFeedForView: MutableList<PokemonsScreenViewData> = mutableListOf()
+    private val pokemonsFeedForView: MutableList<PokemonRecyclerViewItem> =
+        mutableListOf()
+
+    private var page: Int = 1
+
+    private var isLoaded: Boolean = false
+
+    var currentScrollPosition: Int = 0
 
     init {
-        loadPokemonsFeedFromInteractor()
+        if (pokemonsFeedForView.isEmpty()) {
+            loadPokemonsFeedFromInteractor()
+        }
     }
 
     fun loadPokemonsFeedFromInteractor() {
         viewModelScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.Main) {
-                _pokemonsFeedLiveData.value = PokemonsScreensViewState.Loading
+                _pokemonsFeedStateLiveData.value =
+                    PokemonsScreensViewState.Loading
             }
             try {
+                page = 1
                 pokemonsFeedForView.clear()
-                pokemonsFeedForView.addAll(pokemonsFeedInteractor.generateListForViewModel())
+                pokemonsFeedForView.addAll(pokemonsFeedInteractor.generateListForViewModel(page))
+
                 withContext(Dispatchers.Main) {
-                    _pokemonsFeedLiveData.value =
+                    _pokemonsFeedStateLiveData.value =
                         PokemonsScreensViewState.Success(pokemonsFeedForView)
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    _pokemonsFeedLiveData.value = PokemonsScreensViewState.Error
+                    _pokemonsFeedStateLiveData.value =
+                        PokemonsScreensViewState.Error
                 }
             }
+        }
+    }
+
+    fun loadNextPage() {
+        if (!isLoaded) {
+            isLoaded = true
+            page++
+            viewModelScope.launch(Dispatchers.IO) {
+                if (!pokemonsFeedForView.contains(LoadingItem(true))) {
+                    pokemonsFeedForView.add(LoadingItem(true))
+                    withContext(Dispatchers.Main) {
+                        _pokemonsFeedStateLiveData.value = PokemonsScreensViewState.Success(
+                            pokemonsFeedForView
+                        )
+                    }
+                    try {
+                        pokemonsFeedForView.addAll(
+                            pokemonsFeedInteractor.generateListForViewModel(
+                                page
+                            )
+                        )
+                        pokemonsFeedForView.remove(LoadingItem(true))
+                        withContext(Dispatchers.Main) {
+                            _pokemonsFeedStateLiveData.value =
+                                PokemonsScreensViewState.Success(
+                                    pokemonsFeedForView
+                                )
+                        }
+                        isLoaded = false
+                    } catch (e: Exception) {
+                        withContext(Dispatchers.Main) {
+                            _pokemonsFeedStateLiveData.value =
+                                PokemonsScreensViewState.Error
+                        }
+                        isLoaded = false
+                    }
+                } else {
+                    return@launch
+                }
+            }
+        } else {
+            return
         }
     }
 
@@ -58,7 +113,8 @@ class PokemonsFeedViewModel @Inject constructor(private val pokemonsFeedInteract
     fun onFavoriteClicked(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val pokemon = pokemonsFeedForView.find { it.id == id }
+                val pokemon =
+                    pokemonsFeedForView.find { it is PokemonsScreenViewData && it.id == id } as? PokemonsScreenViewData
                 if (pokemon != null) {
                     pokemonsFeedInteractor.switchPokemonFavoriteInDB(
                         pokemon.id, pokemon.name, pokemon.image
@@ -68,7 +124,7 @@ class PokemonsFeedViewModel @Inject constructor(private val pokemonsFeedInteract
                     val updatedPokemon = pokemon.copy(isFavorite = isFavorite)
 
                     pokemonsFeedForView.replaceAll {
-                        if (it.id == updatedPokemon.id) {
+                        if (it is PokemonsScreenViewData && it.id == updatedPokemon.id) {
                             updatedPokemon
                         } else {
                             it
@@ -76,15 +132,22 @@ class PokemonsFeedViewModel @Inject constructor(private val pokemonsFeedInteract
                     }
 
                     withContext(Dispatchers.Main) {
-                        _pokemonsFeedLiveData.value =
-                            PokemonsScreensViewState.Success(pokemonsFeedForView.toList())
+                        _pokemonsFeedStateLiveData.value =
+                            PokemonsScreensViewState.Success(
+                                pokemonsFeedForView.toList()
+                            )
                     }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    _pokemonsFeedLiveData.value = PokemonsScreensViewState.Error
+                    _pokemonsFeedStateLiveData.value =
+                        PokemonsScreensViewState.Error
                 }
             }
         }
+    }
+
+    fun onScrollPositionChanged(position: Int) {
+        currentScrollPosition = position
     }
 }

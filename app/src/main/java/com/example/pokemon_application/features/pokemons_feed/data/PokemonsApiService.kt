@@ -7,9 +7,10 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface PokemonsApiService {
-    @GET("cards")
+    @GET("cards/"+"?3ac80715-ca5b-4d50-9037-1af7ccb25d11")
     suspend fun getAllPokemonsFromAPI(
-        @Query("pageSize") pageSize: Int = 20,
+        @Query("page") page: Int,
+        @Query("pageSize") pageSize: Int = 16,
     ): PokemonsResponse
 
     @GET("cards/{id}")

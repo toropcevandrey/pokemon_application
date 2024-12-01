@@ -7,10 +7,13 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.pokemon_application.R
 import com.example.pokemon_application.databinding.FragmentPokemonsFavoriteBinding
+import com.example.pokemon_application.features.pokemons_feed.presentation.PokemonsScreenViewData
 import com.example.pokemon_application.features.pokemons_feed.presentation.PokemonsScreensViewState
 import com.example.pokemon_application.utils.view.GridSpacingItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,30 +48,42 @@ class PokemonsFavoriteFragment : Fragment(), PokemonsFavoriteListAdapter.OnPokem
     }
 
     private fun onRefresh() {
-        binding.svPokemonsFavorite.setOnRefreshListener {
+        binding.svPokemonsFavorite.setOnRefreshListener(ListenerF1())
+    }
+
+    inner class ListenerF1 : SwipeRefreshLayout.OnRefreshListener {
+        override fun onRefresh() {
             viewModel.loadPokemonsFavoriteFromInteractor()
             binding.svPokemonsFavorite.isRefreshing = false
         }
     }
 
     private fun setObservers() {
-        viewModel.pokemonsFavoriteLiveData.observe(viewLifecycleOwner) { state ->
-            val isError = state is PokemonsScreensViewState.Error
-            val isSuccess = state is PokemonsScreensViewState.Success
-            val isLoading = state is PokemonsScreensViewState.Loading
+        viewModel.pokemonsFavoriteLiveData.observe(viewLifecycleOwner, ObserverF1())
+        viewModel.observeOpenPokemonDetails.observe(viewLifecycleOwner, ObserverF2())
+    }
+
+    inner class ObserverF1 : Observer<PokemonsScreensViewState> {
+        override fun onChanged(value: PokemonsScreensViewState) {
+            val isError = value is PokemonsScreensViewState.Error
+            val isSuccess = value is PokemonsScreensViewState.Success
+            val isLoading = value is PokemonsScreensViewState.Loading
 
             binding.pbPokemonsFavorite.isVisible = isLoading
             binding.tvPokemonsFavoriteError.isVisible = isError
             binding.rvPokemonsFavorite.isVisible = isSuccess
 
             if (isSuccess) {
-                listAdapter.submitList((state as PokemonsScreensViewState.Success).pokemons.toList())
+                val items = (value as PokemonsScreensViewState.Success).items
+                listAdapter.submitList(items.filterIsInstance<PokemonsScreenViewData>())
             }
         }
+    }
 
-        viewModel.observeOpenPokemonDetails.observe(viewLifecycleOwner) { id ->
+    inner class ObserverF2 : Observer<String> {
+        override fun onChanged(value: String) {
             findNavController().navigate(
-                PokemonsFavoriteFragmentDirections.toDetailsFragment(id)
+                PokemonsFavoriteFragmentDirections.actionPokemonsFavoriteFragmentToPokemonDetailsFragment(value)
             )
         }
     }
